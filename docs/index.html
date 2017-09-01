@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chart Watcher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Full-screen cryptocurrency popout charts.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="popout charts, cryptocurrency, bittrex, bitcoin, antshares, bitcoin trading">
+    <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Roboto|Ubuntu" rel="stylesheet">
+
+    <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+
+    <!-- Favicon Collection ( Generated automatically at http://www.favicon-generator.org/ ) -->
+    <!-- Place all icons into a subfolder labeled "images" and then add the following meta info to your webpage -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/images/manifest.json">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="/images/android-icon-192x192.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-icon-precomposed.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/matrix-rain/images/ms-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#41df33">
+
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <style>
+        @-ms-viewport {
+            width: device-width;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .footer {
+            background-color: #4CAF50;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .column {
+            float: left;
+            padding: 15px;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .menu {
+            width: 28%;
+            font-family: 'Didact Gothic', sans-serif;
+        }
+
+        .content {
+            width: 70%;
+        }
+
+        .white {
+            color: white;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li {
+            border: none;
+            color: #ffffff;
+            padding: 8px 8px;
+            margin: 8px;
+            width: 95%;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+            box-shadow: 2px 3px 4px #000000;
+            background-color: #f44336;
+            text-align: center;
+        }
+
+        .menu li:hover {
+            background-color: #da190b;
+        }
+
+        h1 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h2 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h3 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h4 {
+            font-family: "Roboto";
+            margin: 20px;
+        }
+
+        p {
+            font-family: "Roboto";
+        }
+
+        .contentBox {
+            display: table;
+            text-align: left;
+            float: left;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 10px;
+            margin-top: 10px;
+            padding: 2px;
+            /**
+            border: 1px solid #1c1c1c;
+            box-shadow: 2px 3px 4px #111111; 
+            **/
+            box-sizing: border-box;
+            width: 15%;
+            min-width: 150px;
+            min-height: 100px;
+        }
+        /**
+        .contentBox:hover {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        } 
+        **/
+        #miframe {
+            position: relative;
+            height: 120px;
+            width: 365px;
+            background-color: transparent;
+            border: 0;
+            text-align: left;
+        }
+
+        .btn {
+            border: none;
+            color: #ffffff;
+            padding: 8px 8px;
+            margin: 10px;
+            max-width: 50%;
+            min-width: 240px;
+            font-size: 14px;
+            cursor: pointer;
+            box-sizing: border-box;
+            box-shadow: 2px 3px 4px #000000;
+        }
+
+        .success {
+            background-color: #4CAF50;
+        }
+        /* Green */
+
+        .success:hover {
+            background-color: #46a049;
+        }
+
+        .info {
+            background-color: #2196F3;
+        }
+        /* Blue */
+
+        .info:hover {
+            background: #0b7dda;
+        }
+
+        .warning {
+            background-color: #ff9800;
+        }
+        /* Orange */
+
+        .warning:hover {
+            background: #e68a00;
+        }
+
+        .danger {
+            background-color: #f44336;
+        }
+        /* Red */
+
+        .danger:hover {
+            background: #da190b;
+        }
+
+        .default {
+            background-color: #e7e7e7;
+            color: "black";
+        }
+        /* Gray */
+
+        .default:hover {
+            background: #ddd;
+        }
+        /* Center the loader and define appearance */
+
+        #loader {
+            position: relative;
+            left: 48%;
+            z-index: 1;
+            width: 100px;
+            height: 100px;
+            margin-top: 20%;
+            margin-bottom: 30%;
+            border: 2px solid;
+            border-radius: 50%;
+            border-top: 16px solid #367d39;
+            border-bottom: 16px solid #367d39;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Add animation to "page content" */
+
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -80px;
+                opacity: 0
+            }
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<!-- Initiate "loader" and "animate-bottom" to page content -->
+
+<body id="" onload="myFunction()" style="margin:0;">
+    <div id="loader"></div>
+    <div style="display:none;" id="myDiv" class="animate-bottom">
+
+        <div class="header">
+
+            <h1 class="white">CHART WATCHER</h1>
+            <input class="btn danger" type="button" onclick="location.href='http://www.apt-get.co';" value="($) ¯\_(ツ)_/¯ (฿)">
+
+            <p class="white">CRYPTOCURRENCY POPOUT WINDOW CHARTS</p>
+        </div>
+        <br>
+        <h2>Bittrex Exchange</h2>
+        <hr>
+        <br>
+
+        <div class="contentBox">
+            <p><button class="btn info" onclick="btsbtcFunction()">BITSHARES (BTS/BTC)</button>
+                <script>
+                    function btsbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BTS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="etcbtcFunction()">ETHEREUM CLASSIC (ETC/BTC)</button>
+                <script>
+                    function etcbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ETC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="ethbtcFunction()">ETHEREUM (ETH/BTC)</button>
+                <script>
+                    function ethbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ETH", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="xmrbtcFunction()">MONERO (XMR/BTC)</button>
+                <script>
+                    function xmrbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XMR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="neobtcFunction()">NEO (NEO/BTC)</button>
+                <script>
+                    function neobtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NEO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="scbtcFunction()">SIACOIN (SC/BTC)</button>
+                <script>
+                    function scbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="stratbtcFunction()">STRATIS (STRAT/BTC)</button>
+                <script>
+                    function stratbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-STRAT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="voxbtcFunction()">VOXELUS (VOX/BTC)</button>
+                <script>
+                    function voxbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VOX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="wavesbtcFunction()">WAVES (WAVES/BTC)</button>
+                <script>
+                    function wavesbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-WAVES", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p><button class="btn info" onclick="zecbtcFunction()">ZCASH (ZEC/BTC)</button>
+                <script>
+                    function zecbtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ZEC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+            <br>
+        <!-- FOOTER CONTENT
+            <br>
+
+            <div class="footer">
+                <p class="p2"></p>
+
+            </div> -->
+
+            <!-- Conclude the animated div content and insert script to act on that div  -->
+            <script>
+                var myVar;
+
+                function myFunction() {
+                    myVar = setTimeout(showPage, 2000);
+                }
+
+                function showPage() {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("myDiv").style.display = "block";
+                }
+            </script>
+
+</body>
+
+</html>
