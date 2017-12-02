@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ****** SEO META TAGS ****** -->
+    <!-- Key meta tags for proper site compatibility and SEO -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 shrink-to-fit=no">
+
+    <title>Bitcoin Transactions</title>
+
+    <meta name="description" content="View all global bitcoin transactions in real time">
+    <meta property="og:image" content="http://h8rt3rmin8r.com/images/ms-icon-144x144.png">
+    <meta property="og:title" content="Live bitcoin transaction list">
+    <meta property="og:description" content="View all global bitcoin transactions in real time">
+    <meta name="referrer" content="origin">
+
+    <!-- ****** FAVICONS AND BRANDING ****** -->
+    <!-- This site uses a favicon generator service provided by favicon-generator.org -->
+    <link rel="apple-touch-icon" sizes="57x57" href="http://h8rt3rmin8r.com/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="http://h8rt3rmin8r.com/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="http://h8rt3rmin8r.com/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="http://h8rt3rmin8r.com/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="http://h8rt3rmin8r.com/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="http://h8rt3rmin8r.com/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="http://h8rt3rmin8r.com/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="http://h8rt3rmin8r.com/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://h8rt3rmin8r.com/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="http://h8rt3rmin8r.com/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://h8rt3rmin8r.com/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="http://h8rt3rmin8r.com/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://h8rt3rmin8r.com/images/favicon-16x16.png">
+    <link rel="manifest" href="http://h8rt3rmin8r.com/images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="http://h8rt3rmin8r.com/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="http://h8rt3rmin8r.com/images/images/android-icon-192x192.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="http://h8rt3rmin8r.com/images/images/apple-icon-precomposed.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="http://h8rt3rmin8r.com/images/images/ms-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="http://h8rt3rmin8r.com/images/images/favicon.png">
+
+    <!-- ****** CSS STYLE DATA ****** -->
+    <!-- Official Bootstrap style sheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <!-- Customized style sheets -->
+    <link rel="stylesheet" href="https://resonova.github.io/cdn/css/bitnodesA2.css" type="text/css" />
+    <link rel="stylesheet" href="https://resonova.github.io/cdn/css/bitnodesB2.css" type="text/css" />
+
+    <!-- ****** FONT SELECTION ****** -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+
+    <!-- ****** WEBSITE SCRIPTS (js) ****** -->
+    <!-- Ajax and jQuery -->
+    <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card" style="padding: 5px">
+            <main>
+                <a name="new-transactions"></a>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>New Bitcoin Transactions</h1>
+                        <hr>
+                        <p>The live table below shows a list of new unconfirmed transactions. These transactions are no older
+                            than 10 minutes and have been announced by at least 100 reachable nodes. You may enter at least
+                            the first 4 characters of a pending transaction hash to shortlist the transaction the moment
+                            it appears in the list below.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card" style="padding: 5px">
+            <main>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="chart">
+                            <div id="tps-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="card" style="padding: 5px">
+            <main>
+                <div class="row">
+                    <div class="big col-md-2 text-center">
+                        <br>
+                        <h3 id="tps">
+                            <span class="text-muted">0.0</span>
+                        </h3>
+                        <p class="text-muted">Transactions per second</p>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="col-md-10">
+                        <div class="well form-group">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button id="stream" class="btn btn-danger">
+                                        <i class="fa fa-pause"></i>
+                                        <i class="fa fa-play"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="tx" name="tx" placeholder="Transaction hash">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p> PLEASE NOTE: 
+                            The "transactions per second" (tps) is updated every 5 seconds. This value is an average
+                            of the tps values during the last 5 seconds. The values used in the "age" column are based on
+                            the time when the kernel first saw the packet which contained the inv message from a reachable
+                            node. All packets are read off pcap files captured on the listening machine over 2 seconds ago.
+                            Therefore, the appearance of a new transaction in the list could be delayed by around a couple
+                            seconds.
+                        </p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card" style="padding: 5px">
+            <main>
+                <div id="shortlisted" class="row">
+                    <div class="col-md-12">
+                        <p class="paginator">
+                            <h3>Shortlisted Transactions</h3>
+                        </p>
+                        <table class="table table-striped table-hover table-condensed">
+                            <tr>
+                                <th width="40%">AGE&nbsp;(s)</th>
+                                <th width="40%">TRANSACTION HASH</th>
+                                <th width="10%">NODES&nbsp;(%)</th>
+                            </tr>
+                            <tr class="no-transactions">
+                                <td colspan="3" class="text-center">No transactions</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="announced" class="row">
+                    <div class="col-md-12">
+                        <p class="paginator">
+                            <h3>Announced Transactions</h3>
+                        </p>
+                        <table class="table table-striped table-hover table-condensed">
+                            <tr>
+                                <th width="40%">AGE&nbsp;(s)</th>
+                                <th width="40%">TRANSACTION HASH</th>
+                                <th width="10%">NODES&nbsp;(%)</th>
+                            </tr>
+                            <tr class="no-transactions">
+                                <td colspan="3" class="text-center">No transactions</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal fade" id="tx-modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Transaction data</h4>
+                            </div>
+                            <div class="modal-body">
+                                <pre></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <hr>
+    </div>
+    <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="https://resonova.github.io/cdn/js/bitnodesA2.js"></script>
+    <script type="text/javascript" src="https://resonova.github.io/cdn/js/bitnodesB2.js"></script>
+    <script type="text/javascript">
+        var tpsChart;
+        var tpsSeries = [{
+            name: 'Transactions per second',
+            data: (function () {
+                var data = [];
+                var now = new Date().getTime();
+                for (var col = -120; col <= 0; col++) {
+                    data.push({
+                        x: now + col * 1000,
+                        y: 0.0001
+                    });
+                }
+                return data;
+            }())
+        }];
+        $(function () {
+            var wsUrl = 'wss://bitnodes.earn.com/ws-transactions/transactions';
+            var ws;
+            var timer;
+            var attempts = 1;
+            var paused = false;
+            var highlightTx = '';
+            var cache = [];
+            var cacheSize = 100;
+            var cacheIdx = 0;
+            var tps = 0;
+
+            function connect(url) {
+                console.log('Connecting to ' + url);
+                ws = new WebSocket(url);
+                ws.onopen = onopen;
+                ws.onclose = onclose;
+                ws.onmessage = onmessage;
+                ws.onerror = onerror;
+                timer = null;
+            }
+
+            function onopen() {
+                console.log('Connected to ' + ws.url);
+                attempts = 1;
+            }
+
+            function onclose(event) {
+                console.log('Disconnected from ' + ws.url);
+                if (!timer && !paused) {
+                    var interval = generateInterval(attempts);
+                    console.log('Reconnecting in ' + Math.floor(interval) + ' ms');
+                    timer = setTimeout(function () {
+                        attempts++;
+                        connect(ws.url);
+                    }, interval);
+                }
+            }
+
+            function onerror(event) {}
+
+            function onmessage(event) {
+                var data = JSON.parse(event.data);
+                if (data.length == 1) {
+                    tps = data[0];
+                    $('#tps').html(tps);
+                    return;
+                }
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var tx = data[i][0];
+                    var age = (data[i][1] / 1000).toFixed(2);
+                    var percentage = data[i][2].toFixed(2);
+                    var cache_data = tx + percentage;
+                    if (cache.indexOf(cache_data) >= 0) {
+                        return;
+                    }
+                    cache[cacheIdx++ % cacheSize] = cache_data;
+                    var html = ['<tr>', '<td>' + age + '</td>',
+                        '<td><a href="https://bitnodes.earn.com/api/v1/bitcoind/getrawtransaction/' + tx +
+                        '/?format=json" class="tx" title="' + tx + '"><code>', tx.substring(0, 8), '..', tx
+                        .substring(56, 64), '</code></a></td>',
+                        '<td><a href="https://bitnodes.earn.com/api/v1/bitcoind/gettransactionpropagation/' +
+                        tx +
+                        '/?format=json" class="propagation" title="' + tx + '"><code>' + percentage +
+                        '</code></a></td>', '</tr>'
+                    ].join('');
+                    if (highlightTx && tx.indexOf(highlightTx) > -1) {
+                        if ($('#shortlisted tr.no-transactions').length)
+                            $('#shortlisted tr.no-transactions').remove();
+                        while ($('#shortlisted tr').length > 5)
+                            $('#shortlisted tr:last-child').remove();
+                        $('#shortlisted tr').eq(0).after(html);
+                    }
+                    if ($('#announced tr.no-transactions').length)
+                        $('#announced tr.no-transactions').remove();
+                    while ($('#announced tr').length > cacheSize)
+                        $('#announced tr:last-child').remove();
+                    $('#announced tr').eq(0).after(html);
+                }
+            }
+
+            function generateInterval(k) {
+                var maxInterval = (Math.pow(2, k) - 1) * 1000;
+                if (maxInterval > 30 * 1000)
+                    maxInterval = 30 * 1000;
+                return Math.random() * maxInterval;
+            }
+            $('#tx').on('input', function (event) {
+                var tx = $('#tx').val();
+                if (tx.length >= 4 && tx.length <= 64) {
+                    highlightTx = tx;
+                    $('#shortlisted').show();
+                } else {
+                    highlightTx = '';
+                    $('#shortlisted').hide();
+                }
+            });
+            $('#stream').click(function (event) {
+                event.preventDefault();
+                $(this).blur();
+                if (paused) {
+                    paused = false;
+                    $('.fa-pause').show();
+                    $('.fa-play').hide();
+                    $('table, #tps, #tps-chart').removeClass('paused');
+                    connect(ws.url);
+                } else {
+                    paused = true;
+                    $('.fa-pause').hide();
+                    $('.fa-play').show();
+                    $('table, #tps, #tps-chart').addClass('paused');
+                    ws.close();
+                }
+            });
+            $('table').on('click', 'a.tx', function (event) {
+                event.preventDefault();
+                var tx = $(this);
+                var url = tx.prop('href');
+                tx.nextAll('.text-danger').remove();
+                tx.after('<i class="fa fa-spinner fa-spin"></i>');
+                $.get(url, function (data) {
+                    $('#tx-modal h4.modal-title').html('Transaction data');
+                    $('#tx-modal pre').html(JSON.stringify(data, null, '  '));
+                    $('#tx-modal').modal();
+                }).fail(function () {
+                    tx.after(
+                        '<span class="text-danger"><i class="fa fa-exclamation-circle"></i> n/a</span>'
+                    );
+                }).always(function () {
+                    tx.nextAll('.fa-spinner').remove();
+                });
+            });
+            $('table').on('click', 'a.propagation', function (event) {
+                event.preventDefault();
+                var tx = $(this);
+                var url = tx.prop('href');
+                tx.nextAll('.text-danger').remove();
+                tx.after('<i class="fa fa-spinner fa-spin"></i>');
+                $.get(url, function (data) {
+                    $('#tx-modal h4.modal-title').html('Propagation data');
+                    $('#tx-modal pre').html(JSON.stringify(data, null, '  '));
+                    $('#tx-modal').modal();
+                }).fail(function () {
+                    tx.after(
+                        '<span class="text-danger"><i class="fa fa-exclamation-circle"></i> n/a</span>'
+                    );
+                }).always(function () {
+                    tx.nextAll('.fa-spinner').remove();
+                });
+            });
+            tpsChart = new Highcharts.Chart({
+                colors: ['#ff0000'],
+                chart: {
+                    type: 'area',
+                    animation: false,
+                    renderTo: 'tps-chart',
+                    events: {
+                        load: function () {
+                            var series = this.series[0];
+                            setInterval(function () {
+                                if (paused)
+                                    return;
+                                var x = new Date().getTime();
+                                var y = ((tps > 0) ? tps : 0.0001);
+                                series.addPoint([x, y], true, true);
+                            }, 1000);
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'datetime',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    type: 'logarithmic',
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                        enabled: false,
+                        formatter: function () {
+                            if (this.value == 0.0001)
+                                return 0;
+                            return this.value
+                        }
+                    },
+                    floor: 0
+                },
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        var value = this.y;
+                        if (value == 0.0001)
+                            value = 0;
+                        return ['<div style="padding-bottom:.3em">' + Highcharts.dateFormat(
+                                '%H:%M:%S', this.x) + '</div>', '<table>',
+                            '<tr style="border-top:1px solid #840000">',
+                            '<td style="padding:.3em 0; padding-right:1em"><span style="color:' +
+                            this.points[0].series.color + '">\u25CF</span> ' + this.points[0].series
+                            .name + '</td>', '<td style="padding:.3em 0; text-align:right">' +
+                            value + '</td>', '</tr>', '</table>'
+                        ].join('');
+                    },
+                    followPointer: true,
+                    shared: true,
+                    crosshairs: [true]
+                },
+                plotOptions: {
+                    area: {
+                        fillOpacity: 0,
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false,
+                            symbol: 'circle',
+                            radius: 1
+                        },
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                series: tpsSeries
+            });
+            connect(wsUrl);
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(".timestamp").each(function () {
+                $(this).html((new Date(parseInt($(this).text()) * 1000)));
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
