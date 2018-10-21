@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- VIEW LIVE AT https://chart.watch/ -->
+<!-- Copyright 2018 ResoNova International Consulting, LLC (resonova.com) -->
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80288786-11"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-80288786-11');
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chart Watch</title>
+    <meta name="keywords" content="popout charts, cryptocurrency, bittrex, bitcoin, antshares, bitcoin trading">
+    <meta name="description" content="High quality, high visibility cryptocurrency charts by ResoNova">
+
+    <!-- Favicon Branding -->
+    <!-- Apple Spec Branding -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://chart.watch/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://chart.watch/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://chart.watch/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://chart.watch/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://chart.watch/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://chart.watch/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://chart.watch/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://chart.watch/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://chart.watch/apple-icon-180x180.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4CAF50">
+    <meta name="apple-mobile-web-app-title" content="Chart Watch">
+    <link rel="apple-touch-icon-precomposed" href="https://chart.watch/apple-icon-precomposed.png">
+    <!-- Android Spec Branding -->
+    <link rel="icon" type="image/png" sizes="36x36" href="https://chart.watch/android-icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="https://chart.watch/android-icon-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="https://chart.watch/android-icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://chart.watch/android-icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="https://chart.watch/android-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://chart.watch/android-icon-192x192.png">
+    <!--Windows Spec Branding -->
+    <meta name="msapplication-TileColor" content="#4CAF50">
+    <meta name="msapplication-TileImage" content="https://chart.watch/ms-icon-144x144.png">
+    <meta name="msapplication-tooltip" content="High quality cryptocurrency charts by ResoNova">
+    <meta name="msapplication-config" content="https://chart.watch/browserconfig.xml">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="application-name" content="Chart Watch">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- General Web Spec Branding -->
+    <link rel="icon" type="image/png" sizes="16x16" href="https://chart.watch/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://chart.watch/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://chart.watch/favicon-96x96.png">
+    <link rel="manifest" href="https://chart.watch/manifest.json">
+    <!-- Backwards Compatibility for older browsers -->
+    <link rel="shortcut icon" type="image/x-icon" href="https://chart.watch/favicon.ico">
+    <link rel="shortcut icon" href="https://chart.watch/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://chart.watch/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://chart.watch/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/png" sizes="96x96" href="https://chart.watch/favicon-96x96.png">
+
+
+    <!-- Site Styles -->
+    <link rel="stylesheet" href="https://glitchpad.com/assets/css/glitchpad.css">
+    <style>
+        @-ms-viewport {
+            width: device-width;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        
+        body {
+            padding: 0;
+            margin: 0;
+            z-index: -1;
+            background-color: black;
+        }
+        
+        .child {
+            width: 50vw;
+            height: 50vh;
+            z-index: 2 !important;
+        }
+        
+        #childA {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50vh;
+            width: 100vw;
+        }
+        
+        #childB {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50vh;
+            width: 100vw;
+        }
+    </style>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+
+<body>
+    <div class='child child-group-a' id="childA">
+        <script type="text/javascript">
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": "COINBASE:BTCUSD",
+                "interval": "15",
+                "timezone": "Etc/UTC",
+                "theme": "Dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#d6d6d6",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "hideideas": true
+            });
+        </script>
+    </div>
+    <div class='child child-group-a' id="childB">
+        <script type="text/javascript">
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": "BITTREX:WAVESBTC",
+                "interval": "15",
+                "timezone": "Etc/UTC",
+                "theme": "Dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#d6d6d6",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "save_image": false,
+                "hideideas": true
+            });
+        </script>
+    </div>
+    <script src="https://resonova.github.io/cdn/js/glitchpad/glitchpad-whitelabel.min.js"></script>
+</body>
+
+</html>
