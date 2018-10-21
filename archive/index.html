@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chart Watch</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Full-screen cryptocurrency popout charts.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="popout charts, cryptocurrency, bittrex, bitcoin, antshares, bitcoin trading">
+    <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Roboto|Ubuntu" rel="stylesheet">
+
+    <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+
+    <!-- Favicon Collection ( Generated automatically at http://www.favicon-generator.org/ ) -->
+    <!-- Place all icons into a subfolder labeled "images" and then add the following meta info to your webpage -->
+    <link rel="apple-touch-icon" sizes="57x57" href="http://apt-get.co/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="http://apt-get.co/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="http://apt-get.co/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="http://apt-get.co/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="http://apt-get.co/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="http://apt-get.co/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="http://apt-get.co/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="http://apt-get.co/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://apt-get.co/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="http://apt-get.co/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://apt-get.co/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="http://apt-get.co/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://apt-get.co/images/favicon-16x16.png">
+    <link rel="manifest" href="http://apt-get.co/images/manifest.json">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="http://apt-get.co/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="http://apt-get.co/images/android-icon-192x192.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="http://apt-get.co/images/apple-icon-precomposed.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="http://apt-get.co/images/ms-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#41df33">
+
+    <link rel="shortcut icon" href="http://apt-get.co/images/favicon.png">
+    <style>
+        @-ms-viewport {
+            width: device-width;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .footer {
+            background-color: #4CAF50;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .column {
+            float: left;
+            padding: 15px;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .menu {
+            width: 28%;
+            font-family: 'Didact Gothic', sans-serif;
+        }
+
+        .content {
+            width: 70%;
+        }
+
+        .white {
+            color: white;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li {
+            border: none;
+            color: #ffffff;
+            padding: 8px 8px;
+            margin: 8px;
+            width: 95%;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+            box-shadow: 2px 3px 4px #000000;
+            background-color: #f44336;
+            text-align: center;
+        }
+
+        .menu li:hover {
+            background-color: #da190b;
+        }
+
+        h1 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h2 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h3 {
+            font-family: "Roboto";
+            margin: 10px;
+        }
+
+        h4 {
+            font-family: "Roboto";
+            margin: 20px;
+        }
+
+        p {
+            font-family: "Roboto";
+        }
+
+        .contentBox {
+            display: table;
+            text-align: left;
+            float: left;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 10px;
+            margin-top: 10px;
+            padding: 2px;
+            /**
+            border: 1px solid #1c1c1c;
+            box-shadow: 2px 3px 4px #111111; 
+            **/
+            box-sizing: border-box;
+            width: 15%;
+            min-width: 150px;
+            min-height: 100px;
+        }
+        /**
+        .contentBox:hover {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        } 
+        **/
+
+        #miframe {
+            position: relative;
+            height: 120px;
+            width: 365px;
+            background-color: transparent;
+            border: 0;
+            text-align: left;
+        }
+
+        .btn {
+            border: none;
+            color: #ffffff;
+            padding: 8px 8px;
+            margin: 10px;
+            max-width: 50%;
+            min-width: 240px;
+            font-size: 14px;
+            cursor: pointer;
+            box-sizing: border-box;
+            box-shadow: 2px 3px 4px #000000;
+        }
+
+        .success {
+            background-color: #4CAF50;
+        }
+        /* Green */
+
+        .success:hover {
+            background-color: #46a049;
+        }
+
+        .info {
+            background-color: #2196F3;
+        }
+        /* Blue */
+
+        .info:hover {
+            background: #0b7dda;
+        }
+
+        .warning {
+            background-color: #ff9800;
+        }
+        /* Orange */
+
+        .warning:hover {
+            background: #e68a00;
+        }
+
+        .danger {
+            background-color: #f44336;
+        }
+        /* Red */
+
+        .danger:hover {
+            background: #da190b;
+        }
+
+        .default {
+            background-color: #e7e7e7;
+            color: "black";
+        }
+        /* Gray */
+
+        .default:hover {
+            background: #ddd;
+        }
+        /* Center the loader and define appearance */
+
+        #loader {
+            position: relative;
+            left: 48%;
+            z-index: 1;
+            width: 100px;
+            height: 100px;
+            margin-top: 20%;
+            margin-bottom: 30%;
+            border: 2px solid;
+            border-radius: 50%;
+            border-top: 16px solid #367d39;
+            border-bottom: 16px solid #367d39;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Add animation to "page content" */
+
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -80px;
+                opacity: 0
+            }
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<!-- Initiate "loader" and "animate-bottom" to page content -->
+
+<body id="" onload="myFunction()" style="margin:0;">
+    <div id="loader"></div>
+    <div style="display:none;" id="myDiv" class="animate-bottom">
+
+        <div class="header">
+
+            <h1 class="white">CHART.WATCH</h1>
+            <p class="white">CRYPTOCURRENCY POPOUT WINDOW CHARTS</p>
+            <input class="btn danger" type="button" onclick="location.href='http://www.apt-get.co';" value="($) ¯\_(ツ)_/¯ (฿)">
+            <p class="white">Additional Tools</p>
+            <p>
+                <button class="btn info" onclick="calculatorFunction()">Calculator</button>
+                <script>
+                    function calculatorFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://web2.0calc.com/widgets/minimal", "_blank",
+                            "width=420,height=420,resizable");
+                    }
+                </script>
+            </p>
+            <p>
+                <button class="btn info" onclick="preevnanoFunction()">Preev Nano</button>
+                <script>
+                    function preevnanoFunction() {
+                        var x = document.doctype.name;
+                        window.open("http://preev.com", "_blank",
+                            "width=420,height=420,resizable");
+                    }
+                </script>
+            </p>
+            <p>
+                <button class="btn info" onclick="clockFunction()">Digital Clock (Dark)</button>
+                <script>
+                    function clockFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://resonova.github.io/clox/g.html", "_blank",
+                            "width=1000,height=400,resizable");
+                    }
+                </script>
+            </p>
+            <p>
+                <button class="btn info" onclick="bclockFunction()">Basic Clock (Light)</button>
+                <script>
+                    function bclockFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://resonova.github.io/clox/clock.html", "_blank",
+                            "width=260,height=225,resizable");
+                    }
+                </script>
+            </p>
+            <p>
+                <button class="btn info" onclick="notesFunction()">Take Notes</button>
+                <script>
+                    function notesFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://workflowy.com/", "_blank",
+                            "width=1000,height=420,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <br>
+        <h2>Bittrex Exchange - Bitcoin Markets</h2>
+        <hr>
+        <br>
+
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btc1stFunction()">1ST</button>
+                <script>
+                    function btc1stFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-1ST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btc2giveFunction()">2GIVE</button>
+                <script>
+                    function btc2giveFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-2GIVE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcabyFunction()">ABY</button>
+                <script>
+                    function btcabyFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ABY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcadtFunction()">ADT</button>
+                <script>
+                    function btcadtFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ADT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcadxFunction()">ADX</button>
+                <script>
+                    function btcadxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ADX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcaeonFunction()">AEON</button>
+                <script>
+                    function btcaeonFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-AEON", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcagrsFunction()">AGRS</button>
+                <script>
+                    function btcagrsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-AGRS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcampFunction()">AMP</button>
+                <script>
+                    function btcampFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-AMP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcantFunction()">ANT</button>
+                <script>
+                    function btcantFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ANT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcapxFunction()">APX</button>
+                <script>
+                    function btcapxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-APX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcardrFunction()">ARDR</button>
+                <script>
+                    function btcardrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ARDR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcarkFunction()">ARK</button>
+                <script>
+                    function btcarkFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ARK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcaurFunction()">AUR</button>
+                <script>
+                    function btcaurFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-AUR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbatFunction()">BAT</button>
+                <script>
+                    function btcbatFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BAT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbayFunction()">BAY</button>
+                <script>
+                    function btcbayFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BAY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbccFunction()">BCC</button>
+                <script>
+                    function btcbccFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BCC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbcyFunction()">BCY</button>
+                <script>
+                    function btcbcyFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BCY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbitbFunction()">BITB</button>
+                <script>
+                    function btcbitbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BITB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcblitzFunction()">BLITZ</button>
+                <script>
+                    function btcblitzFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BLITZ", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcblkFunction()">BLK</button>
+                <script>
+                    function btcblkFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BLK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcblockFunction()">BLOCK</button>
+                <script>
+                    function btcblockFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BLOCK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbntFunction()">BNT</button>
+                <script>
+                    function btcbntFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BNT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbrkFunction()">BRK</button>
+                <script>
+                    function btcbrkFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BRK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbrxFunction()">BRX</button>
+                <script>
+                    function btcbrxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BRX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbsdFunction()">BSD</button>
+                <script>
+                    function btcbsdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BSD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbtaFunction()">BTA</button>
+                <script>
+                    function btcbtaFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BTA", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbtcdFunction()">BTCD</button>
+                <script>
+                    function btcbtcdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BTCD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbtsFunction()">BTS</button>
+                <script>
+                    function btcbtsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BTS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcburstFunction()">BURST</button>
+                <script>
+                    function btcburstFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BURST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcbycFunction()">BYC</button>
+                <script>
+                    function btcbycFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-BYC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccannFunction()">CANN</button>
+                <script>
+                    function btccannFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CANN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccfiFunction()">CFI</button>
+                <script>
+                    function btccfiFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CFI", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcclamFunction()">CLAM</button>
+                <script>
+                    function btcclamFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CLAM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccloakFunction()">CLOAK</button>
+                <script>
+                    function btccloakFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CLOAK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcclubFunction()">CLUB</button>
+                <script>
+                    function btcclubFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CLUB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccovalFunction()">COVAL</button>
+                <script>
+                    function btccovalFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-COVAL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccpcFunction()">CPC</button>
+                <script>
+                    function btccpcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CPC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccrbFunction()">CRB</button>
+                <script>
+                    function btccrbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CRB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccrwFunction()">CRW</button>
+                <script>
+                    function btccrwFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CRW", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccureFunction()">CURE</button>
+                <script>
+                    function btccureFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CURE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btccvcFunction()">CVC</button>
+                <script>
+                    function btccvcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-CVC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdarFunction()">DAR</button>
+                <script>
+                    function btcdarFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DAR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdashFunction()">DASH</button>
+                <script>
+                    function btcdashFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DASH", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdcrFunction()">DCR</button>
+                <script>
+                    function btcdcrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DCR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdctFunction()">DCT</button>
+                <script>
+                    function btcdctFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DCT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdgbFunction()">DGB</button>
+                <script>
+                    function btcdgbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DGB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdgdFunction()">DGD</button>
+                <script>
+                    function btcdgdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DGD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdmdFunction()">DMD</button>
+                <script>
+                    function btcdmdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DMD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdogeFunction()">DOGE</button>
+                <script>
+                    function btcdogeFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DOGE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdopeFunction()">DOPE</button>
+                <script>
+                    function btcdopeFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DOPE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdracoFunction()">DRACO</button>
+                <script>
+                    function btcdracoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DRACO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdtbFunction()">DTB</button>
+                <script>
+                    function btcdtbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DTB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcdynFunction()">DYN</button>
+                <script>
+                    function btcdynFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-DYN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcebstFunction()">EBST</button>
+                <script>
+                    function btcebstFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EBST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcedgFunction()">EDG</button>
+                <script>
+                    function btcedgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EDG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btceflFunction()">EFL</button>
+                <script>
+                    function btceflFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EFL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcegcFunction()">EGC</button>
+                <script>
+                    function btcegcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EGC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcemcFunction()">EMC</button>
+                <script>
+                    function btcemcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EMC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcemc2Function()">EMC2</button>
+                <script>
+                    function btcemc2Function() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EMC2", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcenrgFunction()">ENRG</button>
+                <script>
+                    function btcenrgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ENRG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcercFunction()">ERC</button>
+                <script>
+                    function btcercFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ERC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcetcFunction()">ETC</button>
+                <script>
+                    function btcetcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ETC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcethFunction()">ETH</button>
+                <script>
+                    function btcethFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ETH", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcexclFunction()">EXCL</button>
+                <script>
+                    function btcexclFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EXCL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcexpFunction()">EXP</button>
+                <script>
+                    function btcexpFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-EXP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcfairFunction()">FAIR</button>
+                <script>
+                    function btcfairFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FAIR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcfctFunction()">FCT</button>
+                <script>
+                    function btcfctFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FCT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcfldcFunction()">FLDC</button>
+                <script>
+                    function btcfldcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FLDC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcfloFunction()">FLO</button>
+                <script>
+                    function btcfloFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FLO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcftcFunction()">FTC</button>
+                <script>
+                    function btcftcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FTC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcfunFunction()">FUN</button>
+                <script>
+                    function btcfunFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-FUN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgamFunction()">GAM</button>
+                <script>
+                    function btcgamFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GAM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgameFunction()">GAME</button>
+                <script>
+                    function btcgameFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GAME", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgbgFunction()">GBG</button>
+                <script>
+                    function btcgbgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GBG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgbyteFunction()">GBYTE</button>
+                <script>
+                    function btcgbyteFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GBYTE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgcrFunction()">GCR</button>
+                <script>
+                    function btcgcrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GCR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgeoFunction()">GEO</button>
+                <script>
+                    function btcgeoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GEO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgldFunction()">GLD</button>
+                <script>
+                    function btcgldFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GLD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgnoFunction()">GNO</button>
+                <script>
+                    function btcgnoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GNO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgntFunction()">GNT</button>
+                <script>
+                    function btcgntFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GNT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgolosFunction()">GOLOS</button>
+                <script>
+                    function btcgolosFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GOLOS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgrcFunction()">GRC</button>
+                <script>
+                    function btcgrcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GRC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgrsFunction()">GRS</button>
+                <script>
+                    function btcgrsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GRS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcgupFunction()">GUP</button>
+                <script>
+                    function btcgupFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-GUP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btchkgFunction()">HKG</button>
+                <script>
+                    function btchkgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-HKG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btchmqFunction()">HMQ</button>
+                <script>
+                    function btchmqFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-HMQ", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcincntFunction()">INCNT</button>
+                <script>
+                    function btcincntFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-INCNT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcinfxFunction()">INFX</button>
+                <script>
+                    function btcinfxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-INFX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btciocFunction()">IOC</button>
+                <script>
+                    function btciocFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-IOC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcionFunction()">ION</button>
+                <script>
+                    function btcionFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ION", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btciopFunction()">IOP</button>
+                <script>
+                    function btciopFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-IOP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btckmdFunction()">KMD</button>
+                <script>
+                    function btckmdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-KMD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btckoreFunction()">KORE</button>
+                <script>
+                    function btckoreFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-KORE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btclbcFunction()">LBC</button>
+                <script>
+                    function btclbcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LBC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btclgdFunction()">LGD</button>
+                <script>
+                    function btclgdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LGD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btclmcFunction()">LMC</button>
+                <script>
+                    function btclmcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LMC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btclskFunction()">LSK</button>
+                <script>
+                    function btclskFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LSK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcltcFunction()">LTC</button>
+                <script>
+                    function btcltcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LTC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btclunFunction()">LUN</button>
+                <script>
+                    function btclunFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-LUN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmaidFunction()">MAID</button>
+                <script>
+                    function btcmaidFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MAID", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmcoFunction()">MCO</button>
+                <script>
+                    function btcmcoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MCO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmemeFunction()">MEME</button>
+                <script>
+                    function btcmemeFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MEME", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmlnFunction()">MLN</button>
+                <script>
+                    function btcmlnFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MLN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmonaFunction()">MONA</button>
+                <script>
+                    function btcmonaFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MONA", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmtlFunction()">MTL</button>
+                <script>
+                    function btcmtlFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MTL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmueFunction()">MUE</button>
+                <script>
+                    function btcmueFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MUE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmusicFunction()">MUSIC</button>
+                <script>
+                    function btcmusicFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MUSIC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmyrFunction()">MYR</button>
+                <script>
+                    function btcmyrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MYR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcmystFunction()">MYST</button>
+                <script>
+                    function btcmystFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-MYST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnautFunction()">NAUT</button>
+                <script>
+                    function btcnautFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NAUT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnavFunction()">NAV</button>
+                <script>
+                    function btcnavFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NAV", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnbtFunction()">NBT</button>
+                <script>
+                    function btcnbtFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NBT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcneoFunction()">NEO</button>
+                <script>
+                    function btcneoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NEO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcneosFunction()">NEOS</button>
+                <script>
+                    function btcneosFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NEOS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnlgFunction()">NLG</button>
+                <script>
+                    function btcnlgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NLG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnmrFunction()">NMR</button>
+                <script>
+                    function btcnmrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NMR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnxcFunction()">NXC</button>
+                <script>
+                    function btcnxcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NXC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnxsFunction()">NXS</button>
+                <script>
+                    function btcnxsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NXS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcnxtFunction()">NXT</button>
+                <script>
+                    function btcnxtFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-NXT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcokFunction()">OK</button>
+                <script>
+                    function btcokFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-OK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcomgFunction()">OMG</button>
+                <script>
+                    function btcomgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-OMG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcomniFunction()">OMNI</button>
+                <script>
+                    function btcomniFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-OMNI", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpartFunction()">PART</button>
+                <script>
+                    function btcpartFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PART", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpayFunction()">PAY</button>
+                <script>
+                    function btcpayFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PAY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpdcFunction()">PDC</button>
+                <script>
+                    function btcpdcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PDC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpinkFunction()">PINK</button>
+                <script>
+                    function btcpinkFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PINK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpivxFunction()">PIVX</button>
+                <script>
+                    function btcpivxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PIVX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpkbFunction()">PKB</button>
+                <script>
+                    function btcpkbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PKB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcpotFunction()">POT</button>
+                <script>
+                    function btcpotFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-POT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcppcFunction()">PPC</button>
+                <script>
+                    function btcppcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PPC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcptcFunction()">PTC</button>
+                <script>
+                    function btcptcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PTC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcptoyFunction()">PTOY</button>
+                <script>
+                    function btcptoyFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-PTOY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcqrlFunction()">QRL</button>
+                <script>
+                    function btcqrlFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-QRL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcqtumFunction()">QTUM</button>
+                <script>
+                    function btcqtumFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-QTUM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcqwarkFunction()">QWARK</button>
+                <script>
+                    function btcqwarkFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-QWARK", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcradsFunction()">RADS</button>
+                <script>
+                    function btcradsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-RADS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcrbyFunction()">RBY</button>
+                <script>
+                    function btcrbyFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-RBY", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcrddFunction()">RDD</button>
+                <script>
+                    function btcrddFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-RDD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcrepFunction()">REP</button>
+                <script>
+                    function btcrepFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-REP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcriseFunction()">RISE</button>
+                <script>
+                    function btcriseFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-RISE", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcrlcFunction()">RLC</button>
+                <script>
+                    function btcrlcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-RLC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsbdFunction()">SBD</button>
+                <script>
+                    function btcsbdFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SBD", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcscFunction()">SC</button>
+                <script>
+                    function btcscFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsecFunction()">SEC</button>
+                <script>
+                    function btcsecFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SEC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcseqFunction()">SEQ</button>
+                <script>
+                    function btcseqFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SEQ", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcshiftFunction()">SHIFT</button>
+                <script>
+                    function btcshiftFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SHIFT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsibFunction()">SIB</button>
+                <script>
+                    function btcsibFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SIB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcslrFunction()">SLR</button>
+                <script>
+                    function btcslrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SLR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcslsFunction()">SLS</button>
+                <script>
+                    function btcslsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SLS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsnglsFunction()">SNGLS</button>
+                <script>
+                    function btcsnglsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SNGLS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsnrgFunction()">SNRG</button>
+                <script>
+                    function btcsnrgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SNRG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsntFunction()">SNT</button>
+                <script>
+                    function btcsntFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SNT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsphrFunction()">SPHR</button>
+                <script>
+                    function btcsphrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SPHR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsprFunction()">SPR</button>
+                <script>
+                    function btcsprFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SPR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcstartFunction()">START</button>
+                <script>
+                    function btcstartFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-START", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsteemFunction()">STEEM</button>
+                <script>
+                    function btcsteemFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-STEEM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcstorjFunction()">STORJ</button>
+                <script>
+                    function btcstorjFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-STORJ", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcstratFunction()">STRAT</button>
+                <script>
+                    function btcstratFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-STRAT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcswiftFunction()">SWIFT</button>
+                <script>
+                    function btcswiftFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SWIFT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcswtFunction()">SWT</button>
+                <script>
+                    function btcswtFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SWT", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsynxFunction()">SYNX</button>
+                <script>
+                    function btcsynxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SYNX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcsysFunction()">SYS</button>
+                <script>
+                    function btcsysFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-SYS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcthcFunction()">THC</button>
+                <script>
+                    function btcthcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-THC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctimeFunction()">TIME</button>
+                <script>
+                    function btctimeFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TIME", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctknFunction()">TKN</button>
+                <script>
+                    function btctknFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TKN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctksFunction()">TKS</button>
+                <script>
+                    function btctksFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TKS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctrigFunction()">TRIG</button>
+                <script>
+                    function btctrigFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TRIG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctrstFunction()">TRST</button>
+                <script>
+                    function btctrstFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TRST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctrustFunction()">TRUST</button>
+                <script>
+                    function btctrustFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TRUST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btctxFunction()">TX</button>
+                <script>
+                    function btctxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-TX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcubqFunction()">UBQ</button>
+                <script>
+                    function btcubqFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-UBQ", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcunbFunction()">UNB</button>
+                <script>
+                    function btcunbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-UNB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcunoFunction()">UNO</button>
+                <script>
+                    function btcunoFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-UNO", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcviaFunction()">VIA</button>
+                <script>
+                    function btcviaFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VIA", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcvoxFunction()">VOX</button>
+                <script>
+                    function btcvoxFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VOX", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcvrcFunction()">VRC</button>
+                <script>
+                    function btcvrcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VRC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcvrmFunction()">VRM</button>
+                <script>
+                    function btcvrmFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VRM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcvtcFunction()">VTC</button>
+                <script>
+                    function btcvtcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VTC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcvtrFunction()">VTR</button>
+                <script>
+                    function btcvtrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-VTR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcwavesFunction()">WAVES</button>
+                <script>
+                    function btcwavesFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-WAVES", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcwingsFunction()">WINGS</button>
+                <script>
+                    function btcwingsFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-WINGS", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxaurFunction()">XAUR</button>
+                <script>
+                    function btcxaurFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XAUR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxbbFunction()">XBB</button>
+                <script>
+                    function btcxbbFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XBB", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxcpFunction()">XCP</button>
+                <script>
+                    function btcxcpFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XCP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxdnFunction()">XDN</button>
+                <script>
+                    function btcxdnFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XDN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxelFunction()">XEL</button>
+                <script>
+                    function btcxelFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XEL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxemFunction()">XEM</button>
+                <script>
+                    function btcxemFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XEM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxlmFunction()">XLM</button>
+                <script>
+                    function btcxlmFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XLM", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxmgFunction()">XMG</button>
+                <script>
+                    function btcxmgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XMG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxmrFunction()">XMR</button>
+                <script>
+                    function btcxmrFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XMR", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxrpFunction()">XRP</button>
+                <script>
+                    function btcxrpFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XRP", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxstFunction()">XST</button>
+                <script>
+                    function btcxstFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XST", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxvcFunction()">XVC</button>
+                <script>
+                    function btcxvcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XVC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxvgFunction()">XVG</button>
+                <script>
+                    function btcxvgFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XVG", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxwcFunction()">XWC</button>
+                <script>
+                    function btcxwcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XWC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btcxzcFunction()">XZC</button>
+                <script>
+                    function btcxzcFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-XZC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btczclFunction()">ZCL</button>
+                <script>
+                    function btczclFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ZCL", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btczecFunction()">ZEC</button>
+                <script>
+                    function btczecFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ZEC", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+        <div class="contentBox">
+            <p>
+                <button class="btn success" onclick="btczenFunction()">ZEN</button>
+                <script>
+                    function btczenFunction() {
+                        var x = document.doctype.name;
+                        window.open("https://bittrex.com/market/MarketStandardChart?marketName=BTC-ZEN", "_blank",
+                            "width=800,height=600,resizable");
+                    }
+                </script>
+            </p>
+        </div>
+
+        <br>
+        <!-- FOOTER CONTENT
+            <br>
+
+            <div class="footer">
+                <p class="p2"></p>
+
+            </div> -->
+
+        <!-- Conclude the animated div content and insert script to act on that div  -->
+        <script>
+            var myVar;
+
+            function myFunction() {
+                myVar = setTimeout(showPage, 2000);
+            }
+
+            function showPage() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("myDiv").style.display = "block";
+            }
+        </script>
+
+</body>
+
+</html>
